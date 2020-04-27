@@ -2,15 +2,19 @@ public class Student {
   int rating;
   private String name;
 
-  // TODO implement Student class according to the instructions provided in the README.md file
+  public static int count = 0;
+  public static int total = 0;
 
   public Student(String name) {
-    //TODO initialize name
+    this.name = name;
+    count++;
   }
 
   public static double getAvgRating() {
-    // TODO return average rating of all students
-    return 0;
+    if (count == 0) {
+      return 0;
+    }
+    return (double) total / count;
   }
 
   public String getName() {
@@ -18,7 +22,7 @@ public class Student {
   }
 
   public void setName(String name) {
-    // TODO set student's name
+    this.name = name;
   }
 
   public int getRating() {
@@ -26,25 +30,47 @@ public class Student {
   }
 
   public void setRating(int rating) {
-    // TODO initialize rating;
+    this.rating = rating;
+    total = total + rating;
   }
 
   public boolean betterStudent(Student student) {
-    // TODO return the result of comparing this.student's rating with the student's rating
-    return false;
+    if(this.rating > student.rating) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   public void changeRating(int rating) {
-    // TODO change this student's rating and average rating of all students
+    total = total - this.rating;
+    this.rating = rating;
+    total = total + rating;
+    System.out.println("total = " + total);
   }
 
   public static void removeStudent(Student student) {
-    // TODO remove student
+    total = total - student.rating;
+    count--;
   }
 
   @Override
   public String toString() {
-    // TODO return String with name and rating of this student
-    return "";
+    return name + " " + rating;
+  }
+  public static void main(String[] args) {
+    Student s1 = new Student("Sarah");
+    s1.setRating(10);
+    System.out.println(s1);
+    Student s2 = new Student("John");
+    s2.setRating(20);
+    System.out.println(s2);
+    Student s3 = new Student("Peter");
+    s3.setRating(30);
+    s1.changeRating(7);
+    System.out.println(Student.getAvgRating());
+    System.out.println(s1.betterStudent(s2));
   }
 }
+
+
